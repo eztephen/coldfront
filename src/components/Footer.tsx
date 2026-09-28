@@ -66,7 +66,7 @@ export default function Footer() {
         </div>
         <div className="flex flex-wrap justify-between gap-4 pt-5 text-[0.79rem] text-[#5D6E7C]">
           <span>
-            © {YEAR} {SITE.name}. A fictional business, built as a design sample.
+            © {YEAR} {SITE.name}. A fictional business — a design sample by <a href="https://eztephen.vercel.app" className="underline underline-offset-2 transition-colors hover:text-white">Eztephen Bacuño</a>.
           </span>
           <span>Privacy · Terms · Warranty</span>
         </div>
