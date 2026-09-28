@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+/* Committed light world with dark bands — trade sites live in daylight.
+   No dark override; every surface paints its colour explicitly. */
+:root {
+  --navy: #0e1621;
+  --navy-deep: #0a1017;
+  --steel: #182432;
+  --steel-lift: #243444;
+  --hivis: #c8f031;
+  --hivis-deep: #a6cc1e;
+  --white: #ffffff;
+  --ground: #edf0f2;
+  --ink: #101820;
+  --ink-soft: #56646f;
+  --ink-faint: #8996a1;
+  --line: #d3dadf;
+  --line-dark: #2c3d4e;
+  --mist: #b9c6d1;
+  --urgent: #d93a2b;
+  --ok: #1e7a4c;
+  --star: #e8a317;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-steel: var(--steel);
+  --color-steel-lift: var(--steel-lift);
+  --color-hivis: var(--hivis);
+  --color-hivis-deep: var(--hivis-deep);
+  --color-ground: var(--ground);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-dark: var(--line-dark);
+  --color-mist: var(--mist);
+  --color-urgent: var(--urgent);
+  --color-ok: var(--ok);
+  --color-star: var(--star);
+  --font-display: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-barlow), "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-barlow), "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.58;
+}
+
+:focus-visible {
+  outline: 3px solid var(--hivis-deep);
+  outline-offset: 2px;
+}
+
+@utility site-wrap {
+  width: min(73.75rem, 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+@utility kicker {
+  display: block;
+  font-family: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 1rem 1.7rem;
+    border: 2px solid transparent;
+    font-family: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.16s, color 0.16s, border-color 0.16s, transform 0.1s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-hivis { background: var(--hivis); border-color: var(--hivis); color: var(--navy); }
+  .btn-hivis:hover { background: var(--hivis-deep); border-color: var(--hivis-deep); }
+  .btn-navy { background: var(--navy); border-color: var(--navy); color: var(--white); }
+  .btn-navy:hover { background: var(--steel); border-color: var(--steel); }
+  .btn-outline-light { background: transparent; border-color: rgb(255 255 255 / 0.4); color: var(--white); }
+  .btn-outline-light:hover { border-color: var(--hivis); color: var(--hivis); }
+
+  /* Diagonal hi-vis stripes behind the hero, like work-van livery */
+  .livery::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    background: repeating-linear-gradient(115deg, var(--hivis) 0 24px, transparent 24px 74px);
+  }
+
+  .hivis-mark { background: var(--hivis); color: var(--navy); padding: 0 0.15em; }
+
+  .steps { counter-reset: step; }
+  .step { counter-increment: step; }
+  .step::before {
+    content: counter(step);
+    font-family: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: var(--hivis-deep);
+  }
+
+  .tick-list li { position: relative; padding-left: 1.1rem; }
+  .tick-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.5rem;
+    height: 2px;
+    background: var(--hivis-deep);
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.pulse-dot { animation: pulse-dot 2s infinite; }
+
+@media (width < 40rem) {
+  body { padding-bottom: 3.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* Very large screens: scale the whole layout up proportionally instead of leaving a
+   narrow column floating in the middle. Breakpoints are unaffected — media queries
+   measure against the browser's default size, not this one. */
+@media (width >= 1800px) {
+  html { font-size: 112.5%; }
+}
+@media (width >= 2300px) {
+  html { font-size: 125%; }
+}
